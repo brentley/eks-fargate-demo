@@ -27,7 +27,35 @@ kubectl get nodes # we see our 3 managed nodes
 - The only load balancer you can use is an Application Load Balancer.
 
 ## Because of that last one, we want to make sure we deploy the frontend to a different namespace:
-- edit yaml and deploy to new namespace
+- edit yaml to deploy to new namespace
+### example diff:
+```
+$ git diff
+diff --git a/kubernetes/deployment.yaml b/kubernetes/deployment.yaml
+index 3dcd89a..aad7093 100644
+--- a/kubernetes/deployment.yaml
++++ b/kubernetes/deployment.yaml
+@@ -4,7 +4,7 @@ metadata:
+   name: ecsdemo-frontend
+   labels:
+     app: ecsdemo-frontend
+-  namespace: default
++  namespace: frontend
+ spec:
+   replicas: 1
+   selector:
+diff --git a/kubernetes/service.yaml b/kubernetes/service.yaml
+index 19c7497..474acaa 100644
+--- a/kubernetes/service.yaml
++++ b/kubernetes/service.yaml
+@@ -2,12 +2,12 @@ apiVersion: v1
+ kind: Service
+ metadata:
+   name: ecsdemo-frontend
++  namespace: frontend
+```
+
+## Create a new namespace and deploy the frontend
 ```
 kubectl create namespace frontend # create a new namespace for the frontend service
 kubectl apply -f ~/environment/ecsdemo-frontend/kubernetes/deployment.yaml # deploy frontend application
