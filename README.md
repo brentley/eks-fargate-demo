@@ -12,8 +12,22 @@
 
 ## Deploy our sample apps:
 - deploy nodejs backend: https://eksworkshop.com/beginner/050_deploy/deploynodejs/
+```
+cd ~/environment/ecsdemo-nodejs
+kubectl apply -f kubernetes/deployment.yaml
+kubectl apply -f kubernetes/service.yaml
+```
 - deploy crystal backend: https://eksworkshop.com/beginner/050_deploy/deploycrystal/
+```
+cd ~/environment/ecsdemo-crystal
+kubectl apply -f kubernetes/deployment.yaml
+kubectl apply -f kubernetes/service.yaml
+```
 - scale up the backends: https://eksworkshop.com/beginner/050_deploy/scalebackend/
+```
+kubectl scale deployment ecsdemo-nodejs --replicas=3
+kubectl scale deployment ecsdemo-crystal --replicas=3
+```
 
 ## Examine current state of things:
 ```
